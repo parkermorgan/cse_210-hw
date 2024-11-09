@@ -23,33 +23,38 @@ class Program
             }
             else if (responseNum == 0)
             {
-                double sum = 0;
-
-                int max = numbers[0];
-
-                foreach (int number in numbers)
+                // Check if the list contains any numbers
+                if (numbers.Count > 0)
                 {
-                    if (number > max)
+                    double sum = 0;
+                    int max = numbers[0];
+
+                    foreach (int number in numbers)
                     {
-                        max = number;
+                        if (number > max)
+                        {
+                            max = number;
+                        }
                     }
-                }
 
-                foreach (int number in numbers)
+                    foreach (int number in numbers)
+                    {
+                        sum += number;
+                    }
+
+                    double avg = sum / numbers.Count;
+
+                    Console.WriteLine($"The sum is: {sum}");
+                    Console.WriteLine($"The average is: {avg}");
+                    Console.WriteLine($"The largest number is: {max}");
+                }
+                else
                 {
-                    sum += number;
+                    Console.WriteLine("No numbers were entered.");
                 }
-                double avg = sum / numbers.Count;
 
-                Console.WriteLine($"The sum is: {sum}");
-                Console.WriteLine($"The average is: {avg}");
-                Console.WriteLine($"The largest number is: {max}");
-                
                 looping = false;
             }
-
-            
-
         }
     }
 }
