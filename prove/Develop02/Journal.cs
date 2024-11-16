@@ -1,10 +1,20 @@
 public class Journal
 {
-    public List<Entry> _entries;
+    public List<Entry> _entries = new List<Entry>();
+    
+    private PromptGenerator _promptGenerator;
 
-    public void AddEntry(Entry newEntry)
+    public Journal(PromptGenerator promptGenerator)
     {
+        _promptGenerator = promptGenerator;
+    }
 
+    public void AddEntry()
+    {
+        Entry newEntry = new Entry();
+        newEntry.GetDate();
+        newEntry.SetPrompt(_promptGenerator);
+        _entries.Add(newEntry);
     }
 
     public void DisplayAll()

@@ -6,18 +6,23 @@ public class Entry
     public string _promptText;
     public string _entryText;
 
-    public Entry()
+    public void GetDate()
     {
+        DateTime theCurrentTime = DateTime.Now;
         _date = theCurrentTime.ToShortDateString();
     }
 
-    public void SetPrompt(string prompt)
+    public void SetPrompt(PromptGenerator promptGenerator)
     {
-        _promptText = prompt;
+        _promptText = promptGenerator.GetRandomPrompt();
+        Console.WriteLine(_promptText);
+        Console.Write("> ");
+        _entryText = Console.ReadLine();
     }
 
     public void Display()
     {
-        Console.WriteLine("Prompt: " + _promptText);
+        Console.WriteLine($"Date: {_date} - Prompt: {_promptText}");
+        Console.WriteLine(_entryText);
     }
 }
