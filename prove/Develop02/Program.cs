@@ -20,36 +20,38 @@ class Program
 
             string _selectStr = Console.ReadLine();
 
-            int _select = int.Parse(_selectStr);
-
-            if (_select == 1)  //Adds an entry to the list
+            if (int.TryParse(_selectStr, out int _select))
             {
-                theJournal.AddEntry();
+                // If parsing is successful, continue with the chosen action
+                if (_select == 1)  // Adds an entry to the list
+                {
+                    theJournal.AddEntry();
+                }
+                else if (_select == 2) // Displays all entries
+                {
+                    theJournal.DisplayAll();
+                }
+                else if (_select == 3) // Loads entries from a file
+                {
+                    theJournal.LoadFromFile();
+                }
+                else if (_select == 4) // Saves entries to a file
+                {
+                    theJournal.SaveToFile();
+                }
+                else if (_select == 5) // Quits the program
+                {
+                    Console.WriteLine("Thank you for using the journal.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect input. Please try again.");
+                }
             }
-
-            else if (_select == 2) //Displays all entries
-            {
-                theJournal.DisplayAll();
-            }
-
-            else if (_select == 3) //Loads entries from a file
-            {
-                theJournal.LoadFromFile();
-            }
-
-            else if (_select == 4) //Saves entries to a file
-            {
-                theJournal.SaveToFile();
-            }
-
-            else if (_select == 5) //Quits the program
-            {
-                break;
-            }
-
             else
             {
-                Console.WriteLine("Incorrect input. Please try again.");
+                Console.WriteLine("Invalid input.");
             }
         }
           
