@@ -16,3 +16,5 @@ class Program
         Console.WriteLine(a3.GetWritingInformation());
     }
 }
+
+
