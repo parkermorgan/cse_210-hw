@@ -51,6 +51,8 @@ public class ReflectingActivity : Activity
     }
 
     Console.WriteLine("\nWell done!!\n");
+
+    DisplayEndingMessage();
   }
   public string GetRandomPrompt()
   {

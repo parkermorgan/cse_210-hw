@@ -28,6 +28,7 @@ public class Activity
     public void DisplayEndingMessage()
     {
         Console.WriteLine($"You have completed another {_duration} seconds of the {_name} activity.");
+        ShowSpinner(3);
         Console.WriteLine("");
     }
     public void ShowSpinner(int seconds)
@@ -40,6 +41,8 @@ public class Activity
             Thread.Sleep(100); 
             Console.Write("\b");
         }
+        Console.Write(" ");
+        Console.Write("\b");
     }
     public void ShowCountDown(int seconds)
     {
