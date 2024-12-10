@@ -1,26 +1,60 @@
+using System;
+
 public class Activity
 {
-    private string _name;
-    private string _description;
-    private int _duration;
+    protected string _name;
+    protected string _description;
+    protected int _duration;
+
+    public Activity(string name, string description, int duration)
+    {
+        _name = name;
+        _description = description;
+        _duration = duration;
+    }
     public void DisplayStartingMessage()
     {
+        Console.WriteLine($"Welcome to the {_name} Activity.\n");
+        Console.Write($"{_description}\n\nHow long, in seconds, would you like for your session? ");
+        _duration = int.Parse(Console.ReadLine());
+        Console.WriteLine("");
+        Console.WriteLine("Get ready...");
+        ShowSpinner(5);
 
+        Console.Write(" ");
+        Console.WriteLine("\n\n");
     }
+
     public void DisplayEndingMessage()
     {
-
+        Console.WriteLine("You have completed the activity.");
+        Console.WriteLine("");
     }
     public void ShowSpinner(int seconds)
     {
+        string[] _spinner = { "|", "/", "-", "\\"};
 
+        for (int i = 0; i < seconds * 10; i++)
+        {
+            Console.Write(_spinner[i % _spinner.Length]);
+            Thread.Sleep(100); 
+            Console.Write("\b");
+        }
     }
-    public void ShowCountDOwn(int second)
+    public void ShowCountDown(int seconds)
     {
+        for (int i = seconds; i > 0; i--)
+        {    
+            Console.Write(i);
+            Thread.Sleep(1000);
+            Console.Write("\b"); 
 
+            if (i == 1)
+            {
+                Console.Write(" ");
+            }
+        } 
+        Console.WriteLine();
     }
-    public Activity()
-    {
-        
-    }
+
 }
