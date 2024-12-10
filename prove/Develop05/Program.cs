@@ -1,3 +1,5 @@
+//PREFACE: ChatGPT was used to assist in creating the spinner icon, and answering questions regarding clearing text, formatting the countdown timer, and figuring out datetime commands.
+
 using System;
 
 class Program
