@@ -19,7 +19,7 @@ public class Activity
         _duration = int.Parse(Console.ReadLine());
         Console.WriteLine("");
         Console.WriteLine("Get ready...");
-        ShowSpinner(5);
+        ShowSpinner(3);
 
         Console.Write(" ");
         Console.WriteLine("\n\n");
@@ -27,7 +27,7 @@ public class Activity
 
     public void DisplayEndingMessage()
     {
-        Console.WriteLine("You have completed the activity.");
+        Console.WriteLine($"You have completed another {_duration} seconds of the {_name} activity.");
         Console.WriteLine("");
     }
     public void ShowSpinner(int seconds)
