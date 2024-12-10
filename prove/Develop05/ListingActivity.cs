@@ -10,9 +10,8 @@ public class ListingActivity : Activity
         "Who are some of your personal heroes?"
     };
 
-    public ListingActivity(string name, string description, int duration): base(name, description, duration)
+    public ListingActivity(string name, string description, int duration) : base(name, description, duration)
     {
-
     }
     public void Run()
 {
@@ -22,13 +21,17 @@ public class ListingActivity : Activity
     Console.Write("You may begin in: ");
     ShowCountDown(5);
     Console.Clear();
+    List<string> responseList = new List<string>();
 
     DateTime startTime = DateTime.Now;
 
     while ((DateTime.Now - startTime).TotalSeconds < _duration)
     {
-        GetListFromUser();
+        Console.Write("> ");
+        string _response = Console.ReadLine();
+        responseList.Add(_response);
     }
+    _count = responseList.Count;
     Console.WriteLine($"You listed {_count} items!\n");
     Console.WriteLine("\nWell done!!\n");
 
@@ -42,14 +45,7 @@ public class ListingActivity : Activity
         string _promptText = _prompts[_randomIndex];
         return _promptText;
     }
-    public List<string> GetListFromUser()
-    {
-        List<string> responseList = new List<string>();
-        Console.Write("> ");
-        string _response = Console.ReadLine();
-        responseList.Add(_response);
-        return responseList;
-    }
+
     
     
 }
