@@ -1,16 +1,16 @@
 using System;
 
-public class Activity
+public abstract class Activity
 {
     protected string _name;
     protected string _description;
     protected int _duration;
 
-    public Activity(string name, string description, int duration)
+
+    public abstract void Run();
+    
+    public Activity()
     {
-        _name = name;
-        _description = description;
-        _duration = duration;
     }
     public void DisplayStartingMessage()
     {
