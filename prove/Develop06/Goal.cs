@@ -1,3 +1,4 @@
+//PREFACE: ChatGPT was used in creating second GetDetailsString().
 public abstract class Goal 
 {
     protected string _shortName;
@@ -25,9 +26,25 @@ public abstract class Goal
         return _points;
     }
 
+    public bool GetIsComplete()
+    {
+        return _isComplete;
+    }
+
+    public void SetIsComplete(bool value)
+    {
+        _isComplete = value;
+    }
+
     public string GetDetailsString()
     {
-        return $"{(_isComplete ? "[X]" : "[ ]")} {_shortName}: {_description} ({_points} points)";
+        string _checkbox = _isComplete ? "[X]" : "[ ]";
+
+        if (this is ChecklistGoal checklistGoal)
+        {
+            _checkbox = $"{_checkbox} (Completed {checklistGoal.GetTimesCompleted()}/{checklistGoal.GetTargetCount()} times)";
+        }
+        return $"{_checkbox} {_shortName}: {_description} ({_points} points)";
     }
 
     public abstract string GetStringRepresentation();

@@ -5,12 +5,24 @@ public class ChecklistGoal : Goal
     private int _timesCompleted = 0;
     private int _targetCount;
     private int _bonusPoints;
+    private GoalManager _goalManager;
 
-    public ChecklistGoal(string name, string description, int points, int targetCount, int bonusPoints)
+    public ChecklistGoal(string name, string description, int points, int targetCount, int bonusPoints, GoalManager goalManager)
         : base(name, description, points)
     {
         _targetCount = targetCount;
         _bonusPoints = bonusPoints;
+        _goalManager = goalManager;
+    }
+
+    public int GetTimesCompleted()
+    {
+        return _timesCompleted;
+    }
+
+    public int GetTargetCount()
+    {
+        return _targetCount;
     }
 
     public override void RecordEvent()
@@ -20,6 +32,7 @@ public class ChecklistGoal : Goal
 
         if (_timesCompleted == _targetCount)
         {
+            _goalManager.AddBonusPoints(_bonusPoints);
             Console.WriteLine($"Congratulations! You completed the checklist goal: {_shortName} and earned {_bonusPoints} bonus points!");
             _isComplete = true;
         }

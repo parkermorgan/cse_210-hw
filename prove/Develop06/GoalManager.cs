@@ -1,5 +1,6 @@
-//PREFACE: ChatGPT was used for adding index numbers to ListGoalDetails and checklist information in RecordEvent
+//PREFACE: ChatGPT was used for adding index numbers to ListGoalDetails(), checklist information in RecordEvent(), and splitting up string information and goal type in LoadGoals().
 
+using System.Formats.Asn1;
 using System.Runtime.ExceptionServices;
 
 public class GoalManager
@@ -16,6 +17,11 @@ public class GoalManager
     public void DisplayPlayerInfo()
     {
         Console.WriteLine($"\nYou have {_score} points.\n");
+    }
+
+    public void AddBonusPoints(int bonusPoints)
+    {
+        _score += bonusPoints;
     }
 
     public void Start()
@@ -44,6 +50,14 @@ public class GoalManager
             {
                 Console.WriteLine();
                 ListGoalDetails();
+            }
+            else if (response == "3")
+            {
+                SaveGoals();
+            }
+            else if (response == "4")
+            {
+                LoadGoals();
             }
             else if (response == "5")
             {
@@ -103,7 +117,7 @@ public class GoalManager
             string _bonusString = Console.ReadLine();
             int bonus = int.Parse(_bonusString);
 
-            newGoal = new ChecklistGoal(name, description, points, count, bonus);
+            newGoal = new ChecklistGoal(name, description, points, count, bonus, this);
         }
         else
         {
@@ -113,6 +127,14 @@ public class GoalManager
         _goals.Add(newGoal);
     }
 
+    public void ListGoalNames()
+    {
+        Console.WriteLine("Which goal did you accomplish? ");
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {_goals[i].getName()}");
+        }
+    }
     public void RecordEvent()
     {
         if (_goals.Count == 0)
@@ -121,11 +143,7 @@ public class GoalManager
             return;
         }
 
-        Console.WriteLine("Which goal did you accomplish? ");
-        for (int i = 0; i < _goals.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {_goals[i].getName()}");
-        }
+        ListGoalNames();
 
         string choiceString = Console.ReadLine();
         int goalChoice = int.Parse(choiceString);
@@ -144,5 +162,75 @@ public class GoalManager
         {
             Console.WriteLine($"{i + 1}. {_goals[i].GetDetailsString()}");
         }
+    }
+
+    public void SaveGoals()
+    {
+        Console.Write("What is the filename for the goal file? ");
+        string fileName = Console.ReadLine();
+
+        using (StreamWriter outputFile = new StreamWriter(fileName))
+        {
+            outputFile.WriteLine(_score);
+
+            foreach (Goal goal in _goals)
+            {
+                outputFile.WriteLine(goal.GetStringRepresentation());
+            }
+        }
+
+        Console.WriteLine("Your information has been saved.");
+    }
+
+    public void LoadGoals()
+    {
+        Console.Write("What is the filename for the goal file? ");
+        string fileName = Console.ReadLine();
+
+        if(!File.Exists(fileName))
+        {
+            Console.WriteLine("No file found.");
+            return;
+        }
+
+        using (StreamReader inputFile = new StreamReader(fileName))
+        {
+            _score = int.Parse(inputFile.ReadLine());
+
+            _goals.Clear();
+
+            while (!inputFile.EndOfStream)
+            {
+                string goalContent = inputFile.ReadLine();
+                string[] goalSplit = goalContent.Split('|');
+
+                string name = goalSplit[1];
+                string description = goalSplit[2];
+                int points = int.Parse(goalSplit[3]);
+
+                Goal goal = null;
+                if (goalSplit[0] == "SimpleGoal")
+                {
+                    bool isComplete = bool.Parse(goalSplit[4]);
+                    goal = new SimpleGoal(name, description, points);
+                    goal.SetIsComplete(isComplete);
+                }
+                else if (goalSplit[0] == "EternalGoal")
+                {
+                    goal = new EternalGoal(name, description, points);
+                }
+                else if (goalSplit[0] == "ChecklistGoal")
+                {
+                    int count = int.Parse(goalSplit[5]);
+                    int bonus = int.Parse(goalSplit[6]);
+                    bool isComplete = bool.Parse(goalSplit[7]);
+                    goal = new ChecklistGoal(name, description, points, count, bonus,this);
+                    goal.SetIsComplete(isComplete);
+                }
+                    _goals.Add(goal);
+
+                    Console.WriteLine("File loaded successfully.");
+                }
+            }
     }
 }

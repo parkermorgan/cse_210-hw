@@ -1,0 +1,4 @@
+40
+SimpleGoal|Do the laundry|Do both loads of laundry|10|True
+EternalGoal|Read the scriptures|Read 3 chapters of the scriptures once a day.|20|False
+ChecklistGoal|Work out|Work out 3 times this week.|5|2|3|50|False
